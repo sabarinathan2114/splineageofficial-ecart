@@ -1,0 +1,44 @@
+
+---
+
+### 📄 File: `06_SECURITY_POLICY.md`
+
+```markdown
+# Security & Authentication Policy
+
+This document outlines the security measures implemented to protect user data and platform integrity.
+
+## 1. Authentication Strategy
+- **Mechanism:** JSON Web Tokens (JWT).
+- **Access Token:** Short-lived (e.g., 15 minutes). Stored in memory (Redux) or HttpOnly Cookie.
+- **Refresh Token:** Long-lived (e.g., 7 days). Stored in HttpOnly Cookie to prevent XSS access.
+- **Password Hashing:** `bcryptjs` with salt rounds of 10. Never store plain text passwords.
+
+## 2. Authorization (RBAC)
+- **User:** Can access their own profile, create orders, view products.
+- **Admin:** Can access all routes, create/edit/delete products, view all orders.
+- **Middleware:** 
+  - `authMiddleware`: Verifies JWT.
+  - `adminMiddleware`: Checks `user.isAdmin === true`.
+
+## 3. Input Validation & Sanitization
+- **Library:** `express-validator` or `Joi`.
+- **Rules:**
+  - Email must be valid format.
+  - Password must be min 6 characters.
+  - No SQL/NoSQL injection allowed (Mongoose handles most NoSQL injection, but inputs must be sanitized).
+  - XSS Protection: Sanitize user comments/reviews before saving to DB.
+
+## 4. Network Security
+- **HTTPS:** Enforced in production.
+- **CORS:** Configured to allow requests only from the deployed frontend domain.
+- **Helmet:** Used to set secure HTTP headers (e.g., `X-Content-Type-Options`).
+- **Rate Limiting:** `express-rate-limit` applied to auth routes (e.g., max 5 login attempts per 15 mins) to prevent brute force.
+
+## 5. Payment Security
+- **PCI Compliance:** Never store credit card numbers in our database.
+- **Tokenization:** Use Stripe/Razorpay elements to handle card input directly on their secure iframes. We only receive a payment token.
+
+## 6. Session Management
+- **Logout:** Client removes token from Redux/LocalStorage.
+- **Token Blacklisting:** (Optional Advanced) Store revoked tokens in Redis until expiration if immediate logout is required across devices.

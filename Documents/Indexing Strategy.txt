@@ -1,0 +1,60 @@
+
+---
+
+### 📄 File: `05_API_SPEC.md`
+
+```markdown
+# API Specification (RESTful)
+
+This document defines the contract between the Frontend (Redux) and Backend.
+**Base URL:** `/api`
+**Response Format:** All responses return JSON. Errors include a `message` field.
+
+## 1. Authentication Endpoints
+
+### Register User
+- **Endpoint:** `POST /api/users`
+- **Body:** `{ "name": "John", "email": "john@example.com", "password": "123456" }`
+- **Response:** `{ "user": { ... }, "token": "jwt_token" }`
+
+### Login User
+- **Endpoint:** `POST /api/users/login`
+- **Body:** `{ "email": "john@example.com", "password": "123456" }`
+- **Response:** `{ "user": { ... }, "token": "jwt_token" }`
+
+### Get User Profile (Protected)
+- **Endpoint:** `GET /api/users/profile`
+- **Headers:** `Authorization: Bearer <token>`
+- **Response:** `{ "id": "...", "name": "John", "email": "..." }`
+
+## 2. Product Endpoints
+
+### Get All Products
+- **Endpoint:** `GET /api/products`
+- **Query Params:** `?keyword=phone&page=1&category=electronics`
+- **Response:** `{ "products": [...], "page": 1, "pages": 5 }`
+
+### Get Single Product
+- **Endpoint:** `GET /api/products/:id`
+- **Response:** `{ "product": { ... } }`
+
+### Create Product Review (Protected)
+- **Endpoint:** `POST /api/products/:id/reviews`
+- **Body:** `{ "rating": 5, "comment": "Great product" }`
+- **Headers:** `Authorization: Bearer <token>`
+
+## 3. Order Endpoints (Protected)
+
+### Create New Order
+- **Endpoint:** `POST /api/orders`
+- **Body:** 
+  ```json
+  {
+    "orderItems": [{ "product": "id", "qty": 2 }],
+    "shippingAddress": { "address": "...", "city": "..." },
+    "paymentMethod": "Stripe",
+    "itemsPrice": 100,
+    "taxPrice": 10,
+    "shippingPrice": 5,
+    "totalPrice": 115
+  }

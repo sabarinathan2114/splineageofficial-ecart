@@ -1,0 +1,47 @@
+
+---
+
+### 📄 File: `03_ACTIVITY_DIAGRAM.md`
+
+```markdown
+# User Activity Diagram
+
+This diagram illustrates the user journey, focusing on the **Shopping Cart** and **Checkout** process. It highlights decision points such as user authentication and payment success.
+
+## Visual Flow
+
+```mermaid
+flowchart TD
+    Start([User Visits Site]) --> Browse[Browse Products / Search]
+    Browse --> ViewProd[View Product Details]
+    ViewProd --> AddCart{Add to Cart?}
+    
+    AddCart -- No --> Browse
+    AddCart -- Yes --> UpdateState[Redux Updates Cart State]
+    UpdateState --> Persist[Save to LocalStorage]
+    
+    Persist --> ViewCart[View Cart Page]
+    ViewCart --> EditCart{Edit Items?}
+    EditCart -- Yes --> Modify[Update Qty / Remove Item]
+    Modify --> ViewCart
+    EditCart -- No --> ProceedCheck[Proceed to Checkout]
+    
+    ProceedCheck --> CheckAuth{User Logged In?}
+    CheckAuth -- No --> Login[Login / Register Screen]
+    Login --> CheckAuth
+    CheckAuth -- Yes --> ShipAddr[Enter Shipping Address]
+    
+    ShipAddr --> PayMethod[Select Payment Method]
+    PayMethod --> ProcessPay[Process Payment]
+    
+    ProcessPay --> PayStatus{Payment Success?}
+    PayStatus -- No --> PayMethod
+    PayStatus -- Yes --> CreateOrder[Create Order in DB]
+    CreateOrder --> ClearCart[Clear Cart State]
+    ClearCart --> ShowConfirm[Show Order Confirmation]
+    ShowConfirm --> End([End Session])
+
+    style Start fill:#f9f,stroke:#333,stroke-width:2px
+    style End fill:#f9f,stroke:#333,stroke-width:2px
+    style PayStatus fill:#ff9999,stroke:#333,stroke-width:2px
+    style CreateOrder fill:#99ff99,stroke:#333,stroke-width:2px
