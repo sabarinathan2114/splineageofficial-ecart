@@ -25,6 +25,7 @@ const authUser = asyncHandler(async (req, res) => {
             state: user.state,
             pincode: user.pincode,
             image: user.image,
+            createdAt: user.createdAt,
             token,
         });
     } else {
@@ -37,7 +38,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-    const { name, email, password, phoneNumber, role, address, city, state, pincode } = req.body;
+    const { name, email, password, phoneNumber, role, address, city, state, pincode, status, accessLevel } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -56,6 +57,8 @@ const registerUser = asyncHandler(async (req, res) => {
         state,
         pincode,
         role: role || 'buyer',
+        status: status || 'Active',
+        accessLevel: accessLevel || 'Full Access',
     });
 
     if (user) {
@@ -74,6 +77,7 @@ const registerUser = asyncHandler(async (req, res) => {
             state: user.state,
             pincode: user.pincode,
             image: user.image,
+            createdAt: user.createdAt,
             token,
         });
     } else {
@@ -113,6 +117,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
             state: user.state,
             pincode: user.pincode,
             image: user.image,
+            createdAt: user.createdAt,
         });
     } else {
         res.status(404);
@@ -176,6 +181,8 @@ const updateUser = asyncHandler(async (req, res) => {
         user.city = req.body.city || user.city;
         user.state = req.body.state || user.state;
         user.pincode = req.body.pincode || user.pincode;
+        user.status = req.body.status || user.status;
+        user.accessLevel = req.body.accessLevel || user.accessLevel;
 
         const updatedUser = await user.save();
 
@@ -234,6 +241,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             state: updatedUser.state,
             pincode: updatedUser.pincode,
             image: updatedUser.image,
+            createdAt: updatedUser.createdAt,
         });
     } else {
         res.status(404);

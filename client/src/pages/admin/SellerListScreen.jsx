@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useGetUsersQuery, useDeleteUserMutation, useGetSellerStatsQuery } from '../../redux/api/userApiSlice';
-import { Trash2, Store, Mail, Phone, Calendar, User as UserIcon, X, BarChart3, Package, DollarSign, Activity } from 'lucide-react';
+import { Trash2, Store, Mail, Phone, Calendar, User as UserIcon, X, BarChart3, Package, DollarSign, Activity, Search } from 'lucide-react';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import { toast } from 'react-toastify';
@@ -88,8 +88,13 @@ const SellerListScreen = () => {
     const { data: users, refetch, isLoading, error } = useGetUsersQuery();
     const [deleteUser, { isLoading: loadingDelete }] = useDeleteUserMutation();
     const [selectedSellerId, setSelectedSellerId] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const sellers = users?.filter(user => user.role === 'seller') || [];
+    const filteredSellers = sellers.filter(seller =>
+        seller.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        seller._id.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const deleteHandler = async (id, e) => {
         e.stopPropagation();
@@ -128,8 +133,28 @@ const SellerListScreen = () => {
                     <p className="text-slate-500 font-medium">There are currently no users registered as sellers.</p>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {sellers.map((seller) => (
+                <>
+                    {/* Search Bar */}
+                    <div className="flex flex-col sm:flex-row gap-4 mb-6 justify-between items-center text-[10px] font-black uppercase tracking-widest text-slate-400">
+                        <div className="relative w-full sm:max-w-xl">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                            <input
+                                type="text"
+                                placeholder="Search sellers by name or ID..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="w-full bg-white border border-slate-200 rounded-xl py-4 pl-12 pr-6 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-slate-900 focus:border-transparent transition-all shadow-sm"
+                            />
+                        </div>
+                    </div>
+
+                    {filteredSellers.length === 0 ? (
+                        <div className="text-center py-12 text-slate-400 font-medium italic">
+                            No sellers found matching your search.
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            {filteredSellers.map((seller) => (
                         <div
                             key={seller._id}
                             onClick={() => setSelectedSellerId(seller._id)}
@@ -163,8 +188,10 @@ const SellerListScreen = () => {
                                 <span className="text-[10px] font-bold text-slate-400">{new Date(seller.createdAt).toLocaleDateString()}</span>
                             </div>
                         </div>
-                    ))}
-                </div>
+                            ))}
+                        </div>
+                    )}
+                </>
             )}
 
             {selectedSellerId && (

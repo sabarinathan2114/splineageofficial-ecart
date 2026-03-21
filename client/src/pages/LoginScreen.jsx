@@ -25,7 +25,13 @@ const LoginScreen = () => {
 
     useEffect(() => {
         if (userInfo) {
-            navigate(redirect);
+            if (userInfo.isAdmin) {
+                navigate('/');
+            } else if (userInfo.isSeller) {
+                navigate('/seller/dashboard');
+            } else {
+                navigate(redirect);
+            }
         }
     }, [navigate, redirect, userInfo]);
 

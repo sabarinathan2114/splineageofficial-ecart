@@ -40,7 +40,7 @@ const SellerLayout = () => {
             <aside className="w-64 bg-[#0B1120] text-white flex flex-col hidden md:flex">
                 {/* Logo Area */}
                 <div className="h-20 flex items-center px-6 border-b border-gray-800">
-                    <Link to="/" className="flex items-center gap-2">
+                    <Link to="/seller/dashboard" className="flex items-center gap-2">
                         <div className="bg-white text-[#0B1120] font-black text-xl p-1 rounded">eS</div>
                         <span className="text-xl font-black tracking-tight text-white italic">e<span className="text-blue-500">SHOP</span> <span className="text-slate-400 font-medium text-xs not-italic uppercase tracking-widest ml-1">Seller</span></span>
                     </Link>
@@ -91,7 +91,7 @@ const SellerLayout = () => {
             {/* Main Content Area */}
             <main className="flex-1 flex flex-col h-screen overflow-hidden">
                 {/* Top Header (Mobile mainly) */}
-                <header className="h-auto py-5 bg-white border-b border-gray-100 flex flex-col px-6 shrink-0 md:hidden gap-y-5">
+                <header className="h-auto py-5 bg-white border-b border-gray-100 flex flex-col px-6 shrink-0 md:hidden gap-y-5 sticky top-0 z-10">
                     <div className="flex items-center justify-between w-full">
                         <Link to="/" className="flex items-center gap-2 shrink-0">
                             <div className="bg-[#0B1120] text-white font-black text-lg px-2 py-0.5 rounded shadow-lg shadow-blue-500/10">eS</div>

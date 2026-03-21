@@ -37,6 +37,8 @@ const StatCard = ({ label, value, sub, icon: Icon, color = 'blue', bg = 'bg-whit
 const SellerDashboard = () => {
     const navigate = useNavigate();
     const [selectedProductId, setSelectedProductId] = useState(null);
+    const [showFullLowStock, setShowFullLowStock] = useState(false);
+    const [showFullTopProducts, setShowFullTopProducts] = useState(false);
     const { userInfo } = useSelector((state) => state.auth);
     const { data: stats, isLoading, error, refetch } = useGetSellerDashboardStatsQuery();
     const [deleteProduct, { isLoading: loadingDelete }] = useDeleteProductMutation();
@@ -131,7 +133,7 @@ const SellerDashboard = () => {
                         </div>
                     ) : (
                         <div className="space-y-4">
-                            {stats.lowStock.map((p) => (
+                            {(showFullLowStock ? stats.lowStock : stats.lowStock.slice(0, 5)).map((p) => (
                                 <div key={p._id} className="group relative">
                                     <div
                                         onClick={() => setSelectedProductId(selectedProductId === p._id ? null : p._id)}
@@ -172,6 +174,15 @@ const SellerDashboard = () => {
                                     )}
                                 </div>
                             ))}
+                            {stats.lowStock.length > 5 && (
+                                <button
+                                    onClick={() => setShowFullLowStock(!showFullLowStock)}
+                                    className="w-full mt-2 py-2 text-[10px] font-black text-slate-500 hover:text-slate-900 uppercase tracking-widest transition-colors flex items-center justify-center gap-1 border border-dashed border-slate-200 rounded-xl"
+                                >
+                                    {showFullLowStock ? 'Show Less' : 'View Full Details'}
+                                    <ArrowRight className={`h-3 w-3 transition-transform ${showFullLowStock ? '-rotate-90' : 'rotate-90'}`} />
+                                </button>
+                            )}
                         </div>
                     )}
                 </div>
@@ -186,7 +197,7 @@ const SellerDashboard = () => {
                         </div>
                     ) : (
                         <div className="space-y-3">
-                            {stats.topProducts.map((p, i) => (
+                            {(showFullTopProducts ? stats.topProducts : stats.topProducts.slice(0, 5)).map((p, i) => (
                                 <div key={p._id} className="flex items-center gap-3">
                                     <span className="text-[10px] font-black text-slate-400 w-5 text-right shrink-0">#{i + 1}</span>
                                     <img src={p.image} alt={p.name} className="h-10 w-10 rounded-xl object-cover bg-slate-100 shrink-0" />
@@ -197,6 +208,15 @@ const SellerDashboard = () => {
                                     <span className="text-xs font-black text-emerald-600 shrink-0">₹{p.revenue}</span>
                                 </div>
                             ))}
+                            {stats.topProducts.length > 5 && (
+                                <button
+                                    onClick={() => setShowFullTopProducts(!showFullTopProducts)}
+                                    className="w-full mt-4 py-3 text-[10px] font-black text-slate-500 hover:text-slate-900 uppercase tracking-widest transition-colors flex items-center justify-center gap-1 border border-dashed border-slate-200 rounded-xl"
+                                >
+                                    {showFullTopProducts ? 'Show Less' : 'View Full Details'}
+                                    <ArrowRight className={`h-3 w-3 transition-transform ${showFullTopProducts ? '-rotate-90' : 'rotate-90'}`} />
+                                </button>
+                            )}
                         </div>
                     )}
                 </div>

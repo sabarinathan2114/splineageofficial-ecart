@@ -123,6 +123,7 @@ const SellerOrdersScreen = () => {
                                             <th className="py-4 px-6 text-xs font-black uppercase tracking-widest text-[10px]">Order ID</th>
                                             <th className="py-4 px-6 text-xs font-black uppercase tracking-widest text-[10px]">Customer</th>
                                             <th className="py-4 px-6 text-xs font-black uppercase tracking-widest text-[10px]">Shipping Address</th>
+                                            <th className="py-4 px-6 text-xs font-black uppercase tracking-widest text-[10px]">Type</th>
                                             <th className="py-4 px-6 text-xs font-black uppercase tracking-widest text-[10px]">Items</th>
                                             <th className="py-4 px-6 text-xs font-black uppercase tracking-widest text-[10px]">Status</th>
                                         </tr>
@@ -146,6 +147,12 @@ const SellerOrdersScreen = () => {
                                                         {order.shippingAddress.city}, {order.shippingAddress.postalCode},<br />
                                                         {order.shippingAddress.country}
                                                     </div>
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    <div className="text-[10px] font-mono text-slate-400 uppercase mb-1">Payment Method</div>
+                                                    <span className="bg-slate-100 text-slate-600 px-2 py-1 rounded text-[9px] font-black uppercase tracking-tighter">
+                                                        {order.paymentMethod}
+                                                    </span>
                                                 </td>
                                                 <td className="py-4 px-6">
                                                     <div className="text-[10px] font-mono text-slate-400 uppercase mb-1">Purchased Products</div>

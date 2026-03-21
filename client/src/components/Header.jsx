@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { ShoppingCart, User, LogOut, Search, Zap, Package, Users, Store, ShoppingBag, Clock } from 'lucide-react';
 import { useLogoutMutation } from '../redux/api/userApiSlice';
 import { logout } from '../redux/slices/authSlice';
@@ -15,8 +15,15 @@ const Header = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [logoutApiCall] = useLogoutMutation();
+
+    // Check if we are on admin, seller, or checkout pages
+    const isHiddenRoute = 
+        location.pathname.startsWith('/admin') || 
+        location.pathname.startsWith('/seller') || 
+        ['/shipping', '/payment', '/placeorder', '/login', '/register', '/profile'].includes(location.pathname);
 
     // Close dropdown when clicking outside
     React.useEffect(() => {
@@ -58,27 +65,28 @@ const Header = () => {
     };
 
     return (
-        <header className="bg-slate-900 text-white shadow-lg sticky-top z-50">
+        <header className="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
             <div className="container mx-auto px-4 py-3 flex items-center justify-between">
                 <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors uppercase leading-none">
                     e<span className="text-blue-500">Shop</span>
                 </Link>
 
                 <div className="hidden md:flex flex-1 mx-8 max-w-md">
-                    <SearchBox />
+                    {!isHiddenRoute && <SearchBox />}
                 </div>
 
                 <nav className="flex items-center space-x-3 sm:space-x-6">
-                    <Link to="/cart" className="relative flex items-center hover:text-blue-400 transition-colors">
-                        <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6" />
-                        {cartItems.length > 0 && (
-                            <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-[10px] font-black px-1.5 py-0.5 rounded-full ring-2 ring-slate-900 leading-none">
-                                {cartItems.reduce((a, c) => a + c.qty, 0)}
-                            </span>
-                        )}
-                        <span className="hidden lg:inline ml-2 text-sm font-black uppercase tracking-widest">Cart</span>
-                    </Link>
-
+                    {!isHiddenRoute && (
+                        <Link to="/cart" className="relative flex items-center hover:text-blue-400 transition-colors">
+                            <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6" />
+                            {cartItems.length > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-[10px] font-black px-1.5 py-0.5 rounded-full ring-2 ring-slate-900 leading-none">
+                                    {cartItems.reduce((a, c) => a + c.qty, 0)}
+                                </span>
+                            )}
+                            <span className="hidden lg:inline ml-2 text-sm font-black uppercase tracking-widest">Cart</span>
+                        </Link>
+                    )}
 
                     {userInfo ? (
                         <div
@@ -168,9 +176,11 @@ const Header = () => {
                 </nav>
             </div>
             {/* Mobile Search Bar - Visible only on small screens below navigation */}
-            <div className="md:hidden px-4 pb-3">
-                <SearchBox />
-            </div>
+            {!isHiddenRoute && (
+                <div className="md:hidden px-4 pb-3">
+                    <SearchBox />
+                </div>
+            )}
         </header>
     );
 };

@@ -8,7 +8,7 @@ import Product from '../models/productModel.js';
 // @access  Private/Admin
 const getAdminStats = asyncHandler(async (req, res) => {
     const totalUsers = await User.countDocuments();
-    const totalSellers = await User.countDocuments({ isSeller: true });
+    const totalSellers = await User.countDocuments({ role: 'seller' });
     const totalProducts = await Product.countDocuments();
     const totalOrders = await Order.countDocuments();
 

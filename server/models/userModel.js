@@ -22,6 +22,16 @@ const userSchema = mongoose.Schema(
             enum: ['buyer', 'seller', 'admin'],
             default: 'buyer',
         },
+        status: {
+            type: String,
+            required: true,
+            enum: ['Active', 'Inactive', 'Deactivated'],
+            default: 'Active',
+        },
+        accessLevel: {
+            type: String,
+            default: 'Full Access',
+        },
         phoneNumber: {
             type: String,
             default: '',

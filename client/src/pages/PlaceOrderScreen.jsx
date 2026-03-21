@@ -110,17 +110,17 @@ const PlaceOrderScreen = () => {
     const isLoading = isCreatingOrder || isCreatingRazorpayOrder || isVerifyingPayment;
 
     return (
-        <div className="max-w-7xl mx-auto py-12 px-4">
+        <div className="max-w-7xl mx-auto py-6 sm:py-12 px-2 sm:px-4">
             <CheckoutSteps step2 step3 step4 />
 
-            <div className="flex flex-col lg:flex-row gap-12">
+            <div className="flex flex-col lg:flex-row gap-8 sm:gap-12">
                 <div className="flex-grow space-y-10">
                     {/* Visual Highlights */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="premium-card p-6 sm:p-8 bg-white border-none shadow-xl shadow-blue-500/5 relative overflow-hidden group">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                        <div className="premium-card p-4 sm:p-8 bg-white border-none shadow-xl shadow-blue-500/5 relative overflow-hidden group">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-500"></div>
-                            <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center relative z-10">
-                                <MapPin className="h-6 w-6 mr-3 text-blue-600" />
+                            <h2 className="text-lg sm:text-xl font-black text-slate-900 mb-4 sm:mb-6 flex items-center relative z-10">
+                                <MapPin className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3 text-blue-600" />
                                 Delivery
                             </h2>
                             <div className="space-y-4 relative z-10">
@@ -141,10 +141,10 @@ const PlaceOrderScreen = () => {
                             </div>
                         </div>
 
-                        <div className="premium-card p-6 sm:p-8 bg-white border-none shadow-xl shadow-blue-500/5 relative overflow-hidden group">
+                        <div className="premium-card p-4 sm:p-8 bg-white border-none shadow-xl shadow-blue-500/5 relative overflow-hidden group">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-bl-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-500"></div>
-                            <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center relative z-10">
-                                <CreditCard className="h-6 w-6 mr-3 text-emerald-600" />
+                            <h2 className="text-lg sm:text-xl font-black text-slate-900 mb-4 sm:mb-6 flex items-center relative z-10">
+                                <CreditCard className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3 text-emerald-600" />
                                 Payment
                             </h2>
                             <div className="space-y-4 relative z-10">
@@ -164,9 +164,9 @@ const PlaceOrderScreen = () => {
 
                     {/* Order Items List */}
                     <div className="premium-card bg-white border-none shadow-xl shadow-blue-500/5 overflow-hidden">
-                        <div className="p-6 sm:p-8 border-b border-slate-50 flex justify-between items-center">
-                            <h2 className="text-xl font-black text-slate-900 flex items-center">
-                                <Package className="h-6 w-6 mr-3 text-blue-600" />
+                        <div className="p-4 sm:p-8 border-b border-slate-50 flex justify-between items-center">
+                            <h2 className="text-lg sm:text-xl font-black text-slate-900 flex items-center">
+                                <Package className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3 text-blue-600" />
                                 Overview
                             </h2>
                             <span className="bg-slate-100 text-slate-600 px-3 sm:px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">
@@ -175,13 +175,13 @@ const PlaceOrderScreen = () => {
                         </div>
                         <div className="divide-y divide-slate-50">
                             {displayItems.length === 0 ? (
-                                <div className="p-12 text-center">
-                                    <ShoppingBag className="h-12 w-12 text-slate-200 mx-auto mb-4" />
-                                    <p className="text-slate-500 font-bold text-lg">Your cart is empty</p>
+                                <div className="p-8 sm:p-12 text-center">
+                                    <ShoppingBag className="h-10 w-10 sm:h-12 sm:w-12 text-slate-200 mx-auto mb-3 sm:mb-4" />
+                                    <p className="text-slate-500 font-bold text-base sm:text-lg">Your cart is empty</p>
                                 </div>
                             ) : (
                                 displayItems.map((item, index) => (
-                                    <div key={index} className="px-6 sm:px-8 py-6 group hover:bg-slate-50/50 transition-colors">
+                                    <div key={index} className="px-4 sm:px-8 py-4 sm:py-6 group hover:bg-slate-50/50 transition-colors">
                                         <div className="flex items-center gap-4 sm:gap-6">
                                             <div className="relative flex-shrink-0">
                                                 <img src={item.image} alt={item.name} className="w-14 h-14 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl object-cover shadow-md transition-transform group-hover:scale-105" />
@@ -207,38 +207,38 @@ const PlaceOrderScreen = () => {
 
                 {/* Right Summary Column */}
                 <div className="lg:w-[400px] flex-shrink-0">
-                    <div className="sticky top-28 space-y-6">
-                        <div className="premium-card bg-white p-6 sm:p-8 border border-slate-100 shadow-2xl shadow-blue-500/10 relative overflow-hidden">
+                    <div className="sticky top-28 space-y-4 sm:space-y-6">
+                        <div className="premium-card bg-white p-4 sm:p-8 border border-slate-100 shadow-2xl shadow-blue-500/10 relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full -mr-32 -mt-32 blur-3xl opacity-50"></div>
 
-                            <h3 className="text-xl font-black mb-8 flex items-center relative z-10 text-slate-900">
-                                <ShoppingBag className="h-6 w-6 mr-3 text-blue-600" />
+                            <h3 className="text-lg sm:text-xl font-black mb-6 sm:mb-8 flex items-center relative z-10 text-slate-900">
+                                <ShoppingBag className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3 text-blue-600" />
                                 Final Total
                             </h3>
 
-                            <div className="space-y-6 relative z-10">
+                            <div className="space-y-4 sm:space-y-6 relative z-10">
                                 <div className="flex justify-between items-center">
-                                    <span className="font-black uppercase tracking-widest text-[10px] text-slate-500">Base Items</span>
-                                    <span className="text-slate-900 font-black text-xl">${cart.itemsPrice}</span>
+                                    <span className="font-black uppercase tracking-widest text-[8px] sm:text-[10px] text-slate-500">Base Items</span>
+                                    <span className="text-slate-900 font-black text-lg sm:text-xl">${cart.itemsPrice}</span>
                                 </div>
                                 <div className="flex justify-between items-center text-slate-500">
-                                    <span className="font-black uppercase tracking-widest text-[10px]">Shipping</span>
-                                    <span className={`font-black text-xl ${cart.shippingPrice === 0 ? 'text-emerald-600' : 'text-slate-900'}`}>
+                                    <span className="font-black uppercase tracking-widest text-[8px] sm:text-[10px]">Shipping</span>
+                                    <span className={`font-black text-lg sm:text-xl ${cart.shippingPrice === 0 ? 'text-emerald-600' : 'text-slate-900'}`}>
                                         {cart.shippingPrice === 0 ? 'FREE' : `$${cart.shippingPrice}`}
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center text-slate-500">
-                                    <span className="font-black uppercase tracking-widest text-[10px]">Taxes</span>
-                                    <span className="text-slate-900 font-black text-xl">${cart.taxPrice}</span>
+                                    <span className="font-black uppercase tracking-widest text-[8px] sm:text-[10px]">Taxes</span>
+                                    <span className="text-slate-900 font-black text-lg sm:text-xl">${cart.taxPrice}</span>
                                 </div>
 
-                                <div className="pt-8 border-t border-slate-100">
-                                    <div className="flex justify-between items-end flex-wrap gap-4">
+                                <div className="pt-6 sm:pt-8 border-t border-slate-100">
+                                    <div className="flex justify-between items-end flex-wrap gap-2 sm:gap-4">
                                         <div>
-                                            <p className="text-blue-600 text-[10px] font-black uppercase tracking-widest mb-1">Amount Due</p>
-                                            <p className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">${cart.totalPrice}</p>
+                                            <p className="text-blue-600 text-[8px] sm:text-[10px] font-black uppercase tracking-widest mb-0.5 sm:mb-1">Amount Due</p>
+                                            <p className="text-2xl sm:text-4xl font-black tracking-tight text-slate-900">${cart.totalPrice}</p>
                                         </div>
-                                        <div className="bg-blue-50 px-3 py-1.5 rounded-lg text-[10px] font-black text-blue-600 uppercase tracking-widest border border-blue-100/50">
+                                        <div className="bg-blue-50 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[8px] sm:text-[10px] font-black text-blue-600 uppercase tracking-widest border border-blue-100/50">
                                             {cart.paymentMethod === 'Razorpay' ? 'Secure digital' : 'Pay on arrival'}
                                         </div>
                                     </div>
@@ -248,14 +248,16 @@ const PlaceOrderScreen = () => {
                             <button
                                 onClick={placeOrderHandler}
                                 disabled={displayItems.length === 0 || isLoading}
-                                className="w-full mt-10 bg-blue-600 hover:bg-blue-500 text-white py-4 sm:py-5 rounded-2xl font-black text-lg transition-all shadow-xl shadow-blue-600/30 active:scale-[0.98] disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center group"
+                                className="w-full mt-6 sm:mt-10 bg-blue-600 hover:bg-blue-500 text-white py-3.5 sm:py-5 rounded-xl sm:rounded-2xl font-black text-base sm:text-lg transition-all shadow-xl shadow-blue-600/30 active:scale-[0.98] disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center group"
                             >
                                 {isLoading ? (
-                                    <Loader2 className="h-7 w-7 animate-spin" />
+                                    <Loader2 className="h-6 w-6 sm:h-7 sm:w-7 animate-spin" />
                                 ) : (
                                     <>
-                                        {cart.paymentMethod === 'Razorpay' ? 'Securely Pay Now' : 'Confirm Order'}
-                                        <ArrowRight className="ml-3 h-6 w-6 transform group-hover:translate-x-1 transition-transform" />
+                                        <span className="text-sm sm:text-lg">
+                                            {cart.paymentMethod === 'Razorpay' ? 'Securely Pay Now' : 'Confirm Order'}
+                                        </span>
+                                        <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 transform group-hover:translate-x-1 transition-transform" />
                                     </>
                                 )}
                             </button>
